@@ -1,0 +1,7 @@
+## Interface: 90002
+## Author: Rhythm
+## Version: 9.0.0
+## Title: FreeInstanceSharer_SmartReply
+## RequiredDeps: FreeInstanceSharer
+
+FreeInstanceSharer_SmartReply.lua
