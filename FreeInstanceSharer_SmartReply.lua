@@ -132,7 +132,7 @@ local delimiter = '-'
 local currentIndex = 1
 
 local originSendMessage = F.SendMessage
-F.SendMessage = function(text, ...)
+F.SendMessage = function(self, text, ...)
     if text and text ~= '' then
         local fixerText = ''
 
@@ -155,5 +155,5 @@ F.SendMessage = function(text, ...)
         end
     end
 
-    return originSendMessage(text, ...)
+    return originSendMessage(self, text, ...)
 end
