@@ -1,6 +1,6 @@
 ## Interface: 90005
 ## Author: Rhythm
-## Version: 9.0.1
+## Version: 9.0.5
 ## Title: FreeInstanceSharer_SmartReply
 ## RequiredDeps: FreeInstanceSharer
 
