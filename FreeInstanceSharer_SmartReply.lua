@@ -1,6 +1,5 @@
 if not _G.FreeInstanceSharer then return end
-
-local F = _G.FreeInstanceSharer[1]
+local F, L, P, G = unpack(_G.FreeInstanceSharer)
 
 local fixer = {
     "魔兽小知识：“瑞文戴尔的死亡战马”5人本【斯坦索姆】亡灵区首领【奥里尔斯.瑞文戴尔领主】小几率掉落-掉率0.7%。",
@@ -126,34 +125,68 @@ local fixer = {
     "魔兽小知识：“邮件吞噬者”120级版本惊魂幻象【开启邮箱】刷新出稀有【邮件吞噬者】必掉。",
 }
 
-local inOrder = true
-local delimiter = '-'
-
 local currentIndex = 1
 
 local originSendMessage = F.SendMessage
-F.SendMessage = function(self, text, ...)
-    if text and text ~= '' then
-        local fixerText = ''
+F.SendMessage = function(self, text, chatType, ...)
+    if not F.db.SmartReply.OnlyWhisper or chatType == 'WHISPER' then
+        if text and text ~= '' then
+            local fixerText = ''
 
-        if inOrder then
-            fixerText = fixer[currentIndex]
+            if F.db.SmartReply.ContentMode == 2 then
+                fixerText = fixer[currentIndex]
 
-            currentIndex = currentIndex + 1
-            if currentIndex > #fixer then
-                currentIndex = 1
+                currentIndex = currentIndex + 1
+                if currentIndex > #fixer then
+                    currentIndex = 1
+                end
+            else
+                fixerText = fixer[random(#fixer)]
             end
-        else
-            fixerText = fixer[random(#fixer)]
-        end
 
-        local prefix = random(2)
-        if prefix == 1 then
-            text = fixerText .. delimiter .. text
-        else
-            text = text .. delimiter .. fixerText
+            local prefix = random(2)
+            if prefix == 1 then
+                text = fixerText .. F.db.SmartReply.Delimiter .. text
+            else
+                text = text .. F.db.SmartReply.Delimiter .. fixerText
+            end
         end
     end
 
-    return originSendMessage(self, text, ...)
+    return originSendMessage(self, text, chatType, ...)
 end
+
+P["SmartReply"] = {
+    ["OnlyWhisper"] = true,
+    ["Delimiter"] = '-',
+    ["ContentMode"] = 1,
+}
+
+F.Options.args.Plugins.args.SmartReply = {
+    name = "自动前后缀",
+    type = 'group',
+    get = function(info) return F.db.SmartReply[info[#info]] end,
+    set = function(info, value) F.db.SmartReply[info[#info]] = value end,
+    args = {
+        OnlyWhisper = {
+            order = 1,
+            name = "仅在密语添加",
+            type = 'toggle',
+        },
+        Delimiter = {
+            order = 2,
+            name = "分隔符",
+            type = 'input',
+        },
+        ContentMode = {
+            order = 3,
+            name = "内容选择模式",
+            type = 'select',
+            style = 'radio',
+            values = {
+                [1] = "随机",
+                [2] = "顺序",
+            },
+        },
+    },
+}
