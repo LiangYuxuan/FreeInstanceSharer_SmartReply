@@ -1,7 +1,8 @@
 ## Interface: 90005
-## Author: Rhythm
-## Version: 9.0.5
+## Author: @project-author@
+## Version: @project-version@
 ## Title: FreeInstanceSharer_SmartReply
 ## RequiredDeps: FreeInstanceSharer
+## X-ReleaseDate: @project-date-iso@
 
 FreeInstanceSharer_SmartReply.lua
