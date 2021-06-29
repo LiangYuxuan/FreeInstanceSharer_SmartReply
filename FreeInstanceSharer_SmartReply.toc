@@ -1,4 +1,4 @@
-## Interface: 90005
+## Interface: 90100
 ## Author: @project-author@
 ## Version: @project-version@
 ## Title: FreeInstanceSharer_SmartReply
