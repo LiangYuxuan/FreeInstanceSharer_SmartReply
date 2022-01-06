@@ -131,7 +131,7 @@ local originSendMessage = F.SendMessage
 F.SendMessage = function(self, text, chatType, ...)
     if not F.db.SmartReply.OnlyWhisper or chatType == 'WHISPER' then
         if text and text ~= '' then
-            local fixerText = ''
+            local fixerText
 
             if F.db.SmartReply.ContentMode == 2 then
                 fixerText = fixer[currentIndex]
